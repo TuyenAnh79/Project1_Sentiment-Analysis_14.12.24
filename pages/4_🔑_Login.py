@@ -116,6 +116,7 @@ def display_customer_reviews(maKH, df_reviews):
     # Hiển thị biểu đồ
     st.pyplot(plt)
 
+#----------------------
 
     # Tiêu đề ứng dụng
     st.title("Tìm kiếm thông tin đánh giá sản phẩm")
@@ -136,13 +137,62 @@ def display_customer_reviews(maKH, df_reviews):
         else:
             product_reviews = pd.DataFrame()  # Không có từ khóa thì kết quả rỗng
 
-    # Hiển thị kết quả đánh giá
+    # Kiểm tra nếu có sản phẩm đánh giá
     if not product_reviews.empty:
         st.write(f"Thông tin đánh giá cho sản phẩm:")
-        st.dataframe(product_reviews[['ten_san_pham','ngay_binh_luan', 'noi_dung_binh_luan', 'phan_loai_danh_gia', 'so_sao']])
+
+        # Chọn các cột cần thiết từ product_reviews
+        product_reviews = product_reviews[['ma_san_pham', 'ten_san_pham', 'gia_ban', 'ngay_binh_luan', 'noi_dung_binh_luan', 'phan_loai_danh_gia', 'so_sao']]
+
+        # Data chứa link hình sản phẩm
+        image_df = pd.read_csv('files_nam/San_pham_Link_Image_Brand.csv')
+
+        # Kết hợp dữ liệu hình ảnh và thông tin sản phẩm
+        product_reviews = pd.merge(product_reviews, image_df, on="ma_san_pham", how="inner")
+
+        # # Hiển thị dữ liệu đã được kết hợp
+        # st.dataframe(product_reviews)
+
+        for index, row in product_reviews.iterrows():
+            # Lấy thông tin sản phẩm
+            product_name = row['ten_san_pham']
+            product_link = row['chi_tiet']
+            product_price = row['gia_ban']
+            stars = row['so_sao']
+            review_date = row['ngay_binh_luan']
+            review_content = row['noi_dung_binh_luan']
+            product_image_path = row['hinh_anh']  # Đảm bảo có đường dẫn tới hình ảnh sản phẩm
+
+            # Tạo 2 cột trong Streamlit
+            col1, col2 = st.columns([1, 3])  # Cột 1 (hình ảnh) và cột 2 (thông tin sản phẩm và bình luận)
+
+            # Cột 1: Hiển thị hình ảnh sản phẩm
+            # Cột 1: Hiển thị hình ảnh sản phẩm
+            with col1:
+                try:
+                    # Hiển thị hình ảnh sản phẩm từ URL hoặc đường dẫn cục bộ
+                    st.image(row['hinh_anh'], width=150)  # Hiển thị hình ảnh với chiều rộng 300px
+                
+                # Hiển thị số sao
+                    st.write(f"**Số sao:** {'⭐' * stars}")
+                                
+                                
+                except Exception as e:
+                    st.write(f"Lỗi khi tải hình ảnh sản phẩm: {e}")
+
+            # Cột 2: Hiển thị các thông tin sản phẩm và đánh giá
+            with col2:
+                # Hiển thị tên sản phẩm và link
+                st.write(f"**Sản phẩm:** [{product_name}]({product_link})")  # Link sản phẩm
+                st.write(f"**Giá bán:** {product_price,} VNĐ")
+
+                # Hiển thị ngày và nội dung bình luận
+                st.write(f"**Ngày bình luận:** {review_date}")
+                st.write(f"**Nội dung bình luận:** {review_content}")
+
     else:
         st.write("Không tìm thấy sản phẩm nào phù hợp.")
-
+#----------------------
 
 # Giao diện Streamlit
 def main():
