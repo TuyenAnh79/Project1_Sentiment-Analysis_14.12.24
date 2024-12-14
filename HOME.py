@@ -30,10 +30,12 @@ st.markdown(
 )
 
 # Tạo hyperlink thủ công
-st.markdown("##### [- Data Exploration 🔍](pages/1_🔍_Data_Exploration.py)", unsafe_allow_html=True)
-st.markdown("##### [- Models 🔍](pages/2_📊_Models.py)", unsafe_allow_html=True)
-st.markdown("##### [- New Predict 🔍](pages/3_🎯_New_Predict.py)", unsafe_allow_html=True)
-st.markdown("##### [- Login 🔍](pages/4_🔑_Login.py)", unsafe_allow_html=True)
+st.markdown("##### [- Data Exploration 🔍](https://project1sentiment-analysis141224-tyhzdnzwawgx29crzsfflt.streamlit.app/Data_Exploration)", unsafe_allow_html=True)
+st.markdown("##### [- Models 📊](https://project1sentiment-analysis141224-tyhzdnzwawgx29crzsfflt.streamlit.app/Models)", unsafe_allow_html=True)
+st.markdown("##### [- New Predict 🎯](https://project1sentiment-analysis141224-tyhzdnzwawgx29crzsfflt.streamlit.app/New_Predict)", unsafe_allow_html=True)
+st.markdown("##### [- Login 🔑](https://project1sentiment-analysis141224-tyhzdnzwawgx29crzsfflt.streamlit.app/Login)", unsafe_allow_html=True)
+st.markdown("##### [- For_Production_House 🔍](https://project1sentiment-analysis141224-tyhzdnzwawgx29crzsfflt.streamlit.app/For_Production_House)", unsafe_allow_html=True)
+
 
 
 
