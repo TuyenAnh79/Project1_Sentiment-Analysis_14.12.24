@@ -1,0 +1,92 @@
+1	Một
+2	Hai
+3	Ba
+4	Bốn
+5	Năm
+6	Sáu
+6.5	Sáu rưỡi
+7	Bảy
+8	Tám
+9	Chín
+10	Mười
+12	Mười hai
+15	Mười lăm
+18	Mười tám
+20	Hai mươi
+22	Hai hai
+23	Hai ba
+24	Hai bốn
+25	Hai năm
+26	Hai sáu
+27	Hai bảy
+28	Hai tám
+30	Ba mươi
+31	Ba mốt
+32	Ba hai
+35	Ba năm
+36	Ba sáu
+38	Ba tám
+40	Bốn mươi
+45	Bốn lăm
+48	Bốn tám
+49	Bốn chín
+50	Năm mươi
+52	Năm hai
+55	Năm năm
+59	Sáu mươi
+60	Sáu sáu
+66	Bảy mươi
+70	Bảy hai
+72	Bảy năm
+75	Tám mươi
+80	Tám hai
+82	Tám lăm
+85	Tám tám
+88	Chín mươi
+90	Chín lăm
+95	Chín bảy
+97	Một trăm
+100	Một trăm
+110	Một trăm mười
+118	Một trăm mười tám
+120	Một trăm hai mươi
+125	Một trăm hai lăm
+128	Một trăm hai tám
+130	Một trăm ba mươi
+135	Một trăm ba lăm
+138	Một trăm ba tám
+140	Một trăm bốn mươi
+150	Một trăm năm mươi
+155	Một trăm năm lăm
+160	Một trăm sáu mươi
+170	Một trăm bảy mươi
+175	Một trăm bảy lăm
+177	Một trăm bảy bảy
+180	Một trăm tám mươi
+190	Một trăm chín mươi
+200	Hai trăm
+210	Hai trăm mười
+222	Hai trăm hai hai
+230	Hai trăm ba mươi
+235	Hai trăm ba lăm
+236	Hai trăm ba sáu
+237	Hai trăm ba bảy
+240	Hai trăm bốn mươi
+250	Hai trăm năm mươi
+300	Ba trăm
+310	Ba trăm mười
+320	Ba trăm hai mươi
+340	Ba trăm bốn mươi
+400	Bốn trăm
+440	Bốn trăm bốn mươi
+453	Bốn trăm năm mươi ba
+454	Bốn trăm năm mươi bốn
+473	Bốn trăm bảy mươi ba
+500	Năm trăm
+600	Sáu trăm
+800	Tám trăm
+850	Tám trăm năm mươi
+1000	Một nghìn
+ml	mililit
+g	gam
+
