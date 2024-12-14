@@ -233,24 +233,104 @@ st.subheader("5. Sản phẩm có đánh giá thấp nhất và cao nhất")
 
 # Tính điểm đánh giá trung bình cho mỗi sản phẩm
 # Giả sử cột 'danh_gia' là điểm đánh giá và cột 'san_pham' là tên sản phẩm
-average_ratings = df.groupby('ten_san_pham')['so_sao'].mean().reset_index()
+average_ratings = df.groupby('ma_san_pham')[['so_sao']].mean().reset_index()
 
 # Sắp xếp các sản phẩm theo điểm đánh giá từ thấp đến cao
 sorted_ratings = average_ratings.sort_values(by='so_sao')
 
-# Tạo tab 
-tab1, tab2 = st.tabs(["5 sản phẩm có đánh giá cao nhất", "5 sản phẩm có đánh giá thấp nhất"])
-# Nội dung cho Tab 1
-with tab1:
-    # Lấy 5 sản phẩm có đánh giá cao nhất
-    highest_rated = sorted_ratings.tail(5)
-    st.write(highest_rated)
+# Data chứ link hình sản phẩm
+image_df = pd.read_csv('files_nam/San_pham_Link_Image_Brand.csv')
 
-# Nội dung cho Tab 2
-with tab2:
-    # Lấy 5 sản phẩm có đánh giá thấp nhất
-    lowest_rated = sorted_ratings.head(5)
-    st.write(lowest_rated)
+# Kết hợp dữ liệu hình ảnh và thông tin sản phẩm
+combined_df = pd.merge(average_ratings, image_df, on="ma_san_pham", how="inner")
+combined_df = pd.merge(combined_df, san_pham, on="ma_san_pham", how="inner")
+         
+# Hàm hiển thị hình ảnh theo số lượng cố định (2 cột x 3 dòng)
+def display_images(df, num_images=6):
+    cols = st.columns(2)  # Chia thành 2 cột
+    for i, (_, row) in enumerate(df.iterrows()):
+        with cols[i % 2]:  # Chia sản phẩm vào từng cột
+            # Hiển thị hình ảnh sản phẩm
+            st.image(row['hinh_anh'], width=300)
+
+            # Hiển thị tên sản phẩm dưới dạng hyperlink
+            st.markdown(
+                f"<h5 style='text-align: center; margin: 5px;'>"
+                f"<a href='{row['chi_tiet']}' target='_blank'>{row['ten_san_pham']}</a></h5>",
+                unsafe_allow_html=True
+            )
+
+            # Hiển thị giá bán sản phẩm
+            st.markdown(
+                f"<p style='text-align: center; font-size: 16px; color: red; margin: 5px;'>"
+                f"<b>Giá bán: {row['gia_ban']:,} đ</b></p>",
+                unsafe_allow_html=True
+            )
+
+            # Hiển thị số sao đánh giá
+            st.markdown(
+                f"<p style='text-align: center; font-size: 14px; color: orange; margin: 5px;'>"
+                f"⭐ {'⭐' * int(row['so_sao'])} ({row['so_sao']} sao)</p>",
+                unsafe_allow_html=True
+            )
+
+            # Thêm khoảng cách giữa các dòng sản phẩm
+            if i % 2 == 1:  # Sau mỗi 2 sản phẩm
+                st.write("")  # Thêm một khoảng trắng
+                st.markdown("---")  # Thêm một đường kẻ ngang để phân tách
+
+
+# Tạo Tab
+tab1_top, tab2_ground = st.tabs(["🛍️ Danh Sách Sản Phẩm có đánh giá cao nhất", "🛍️ Danh Sách Sản Phẩm có đánh giá thấp nhất"])
+
+# Nội dung cho Tab 1: Sản phẩm có đánh giá cao nhất
+with tab1_top:
+    st.subheader("Sản phẩm được đánh giá cao nhất")
+    num_images_top = st.session_state.get("num_images_high", 6)  # Số lượng hình ban đầu: 6
+    
+    highest_rated = combined_df.tail(10)  # Lấy 10 sản phẩm có đánh giá cao nhất
+    display_images(highest_rated.head(num_images_top))  # Hiển thị sản phẩm
+    
+    # Kiểm tra nếu còn sản phẩm để load
+    if num_images_top < len(highest_rated):
+        if st.button("🔽 Xem thêm", key="high_more_tab1"):
+            num_images_top += 6  # Tăng số lượng sản phẩm hiển thị thêm 6
+            st.session_state.num_images_high = num_images_top
+            st.rerun()
+    else:
+        st.write("🔔 Đã hiển thị tất cả sản phẩm!")
+
+    # Nút "Thu gọn" (reset về 6 sản phẩm)
+    if num_images_top > 6:
+        if st.button("🔼 Thu gọn", key="low_collapse_tab1"):
+            num_images_top = 6  # Reset về 6 sản phẩm
+            st.session_state.num_images_high = num_images_top  # Cập nhật lại trong session_state
+            st.rerun()  # Reload lại giao diện
+
+
+
+# Nội dung cho Tab 2: Sản phẩm có đánh giá thấp nhất
+with tab2_ground:
+    st.subheader("Sản phẩm được đánh giá thấp nhất")
+    num_images_ground = st.session_state.get("num_images_low", 6)  # Số lượng hình ban đầu: 6
+
+    lowest_rated = combined_df.head(10)  # Lấy 10 sản phẩm có đánh giá thấp nhất
+    display_images(lowest_rated.head(num_images_ground))  # Hiển thị sản phẩm
+
+    if num_images_ground < len(lowest_rated):
+        if st.button("🔽 Xem thêm", key="high_more_tab2"):
+            num_images_ground += 6  # Tăng số lượng sản phẩm hiển thị thêm 6
+            st.session_state.num_images_low = num_images_ground
+            st.rerun()  # Sử dụng st.rerun thay cho st.experimental_rerun()
+    else:
+        st.write("🔔 Đã hiển thị tất cả sản phẩm!")
+
+    # Nút "Thu gọn" (reset về 6 sản phẩm)
+    if num_images_ground > 6:
+        if st.button("🔼 Thu gọn", key="low_collapse_tab2"):
+            num_images_ground = 6  # Reset về 6 sản phẩm
+            st.session_state.num_images_low = num_images_ground  # Cập nhật lại trong session_state
+            st.rerun()  # Reload lại giao diện
 
 
 ########################## WORDCLOUD NỘI DUNG BÌNH LUẬN TRỨC VÀ SAU KHI XỬ LÝ
