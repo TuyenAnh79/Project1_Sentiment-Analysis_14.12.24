@@ -288,7 +288,7 @@ with tab1_top:
     st.subheader("Sản phẩm được đánh giá cao nhất")
     num_images_top = st.session_state.get("num_images_high", 6)  # Số lượng hình ban đầu: 6
     
-    highest_rated = combined_df.tail(10)  # Lấy 10 sản phẩm có đánh giá cao nhất
+    highest_rated = combined_df.tail(6)  # Lấy 10 sản phẩm có đánh giá cao nhất
     display_images(highest_rated.head(num_images_top))  # Hiển thị sản phẩm
     
     # Kiểm tra nếu còn sản phẩm để load
@@ -300,12 +300,12 @@ with tab1_top:
     else:
         st.write("🔔 Đã hiển thị tất cả sản phẩm!")
 
-    # Nút "Thu gọn" (reset về 6 sản phẩm)
-    if num_images_top > 6:
-        if st.button("🔼 Thu gọn", key="low_collapse_tab1"):
-            num_images_top = 6  # Reset về 6 sản phẩm
-            st.session_state.num_images_high = num_images_top  # Cập nhật lại trong session_state
-            st.rerun()  # Reload lại giao diện
+    # # Nút "Thu gọn" (reset về 6 sản phẩm)
+    # if num_images_top > 6:
+    #     if st.button("🔼 Thu gọn", key="low_collapse_tab1"):
+    #         num_images_top = 6  # Reset về 6 sản phẩm
+    #         st.session_state.num_images_high = num_images_top  # Cập nhật lại trong session_state
+    #         st.rerun()  # Reload lại giao diện
 
 
 
@@ -314,7 +314,7 @@ with tab2_ground:
     st.subheader("Sản phẩm được đánh giá thấp nhất")
     num_images_ground = st.session_state.get("num_images_low", 6)  # Số lượng hình ban đầu: 6
 
-    lowest_rated = combined_df.head(10)  # Lấy 10 sản phẩm có đánh giá thấp nhất
+    lowest_rated = combined_df.head(6)  # Lấy 10 sản phẩm có đánh giá thấp nhất
     display_images(lowest_rated.head(num_images_ground))  # Hiển thị sản phẩm
 
     if num_images_ground < len(lowest_rated):
@@ -325,12 +325,12 @@ with tab2_ground:
     else:
         st.write("🔔 Đã hiển thị tất cả sản phẩm!")
 
-    # Nút "Thu gọn" (reset về 6 sản phẩm)
-    if num_images_ground > 6:
-        if st.button("🔼 Thu gọn", key="low_collapse_tab2"):
-            num_images_ground = 6  # Reset về 6 sản phẩm
-            st.session_state.num_images_low = num_images_ground  # Cập nhật lại trong session_state
-            st.rerun()  # Reload lại giao diện
+    # # Nút "Thu gọn" (reset về 6 sản phẩm)
+    # if num_images_ground > 6:
+    #     if st.button("🔼 Thu gọn", key="low_collapse_tab2"):
+    #         num_images_ground = 6  # Reset về 6 sản phẩm
+    #         st.session_state.num_images_low = num_images_ground  # Cập nhật lại trong session_state
+    #         st.rerun()  # Reload lại giao diện
 
 
 ########################## WORDCLOUD NỘI DUNG BÌNH LUẬN TRỨC VÀ SAU KHI XỬ LÝ
